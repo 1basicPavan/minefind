@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Input from "../components/input";
+import input from "../components/input";
 import Card from "../components/card";
 import { SKinPreview } from "../components/skin-preview.component";
 import axios from "axios";
@@ -30,7 +30,7 @@ function Home() {
     return (
         <div class="Main">
             <div class="Title">MineFind</div>
-            <input onChange={(e) => setValue(e.target.value)}/>
+            <input className="inputdev" onChange={(e) => setValue(e.target.value)}/>
             <button onClick={() => fetchData()}>
                 Encontrar
             </button>

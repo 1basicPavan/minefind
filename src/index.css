@@ -16,12 +16,15 @@
 
 .Title {
     font-size: 100px;
+    margin-top: 22vh;
     
 }
 
-.Input {
+.inputdev {
     width: 40%;
     height: 20%;
     font-size: 56px;
-    
+    background-color: #75B798;
+    border: none;
+    border-radius: 11px;
 }
