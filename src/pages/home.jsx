@@ -47,7 +47,7 @@ function Home() {
             <button onClick={() => fetchData()}>
                 Encontrar
             </button>
-            <p>{data?.profileName || ""}</p>
+            <p>a{data?.profileName || ""}</p>
             <SKinPreview skinUrl={data?.textures.SKIN.url} />
         </div>
     )
