@@ -1,74 +1,57 @@
-import React, { useState } from "react";
-import ReactSkinview3d  from "react-skinview3d";
-import { WalkingAnimation } from "skinview3d";
+import React, { useEffect, useState } from "react";
+import Input from "../components/input";
+import Card from "../components/card";
+import { SKinPreview } from "../components/skin-preview.component";
+import axios from "axios";
 
 function Home() {
-    const [value, setValue] = useState('');
-    const [skinUrl, setSkinUrl] = useState('');
+    const [data, setData] = useState();
+    const [value, setValue] = useState();
+    const [loading, setLoading] = useState(false);
 
-    const fetchData = () => {
-        const url = `https://mineskin.eu/skin/${value}`;
-        setSkinUrl(url);
-    };
 
-    const downloadSkin = async () => {
-        if (!skinUrl) return;
-
-        try {
-            const response = await fetch(skinUrl);
-            if (!response.ok) {
-                throw new Error('Network response was not ok.');
+    const fetchData = async () => {
+        if (value) {
+            try {
+                setLoading(true);
+                await axios.get(`/api1/users/profiles/minecraft/${value}`)
+                    .then(async (res) => {
+                        console.log("type of res: ", typeof(res))
+                        await axios.get(`/api2/session/minecraft/profile/${res.data.id}`)
+                            .then((resChild) => {
+                                setData(JSON.parse(atob(resChild.data.properties[0].value)));
+                            })
+                    })
+            } catch (error) {
+                console.log(`Error no home.jsx/fetchData`, error);
+            } finally {
+                setLoading(false);
             }
-            const blob = await response.blob();
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `${value}-skin.png`;
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-            window.URL.revokeObjectURL(url);
-        } catch (error) {
-            console.error('Error downloading the skin:', error);
+        } else {
+            window.alert("n pode ta vazio")
         }
     };
 
-    const handleKeyDown = (e) => {
-        if (e.key === 'Enter') {
-            fetchData();
-        }
-    };
+
+    if (loading){
+        return (
+            <div>Carregando...</div>
+        )
+    }
+
 
     return (
-        <div className="Main">
-            <div className="Title">MineFind</div>
-            <input 
-                className="inputdev"
-                value={value} 
-                onChange={(e) => setValue(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder="Digite o nome da skin"
-            />
-            <button onClick={fetchData}>
+        <div class="Main">
+            <div class="Title">MineFind</div>
+            <input onChange={(e) => setValue(e.target.value)} />
+            <button onClick={() => fetchData()}>
                 Encontrar
             </button>
-            {skinUrl && (
-                <>
-                    <ReactSkinview3d 
-                        skinUrl={skinUrl}
-                        height="500"
-                        width="500"
-                        onReady={({ viewer }) => {
-                            viewer.animation = new WalkingAnimation();
-                          }}
-                    />
-                    <button onClick={downloadSkin} className="download-button">
-                        Baixar Skin
-                    </button>
-                </>
-            )}
+            <p>{data?.profileName || ""}</p>
+            <SKinPreview skinUrl={data?.textures.SKIN.url} />
         </div>
-    );
+    )
 }
 
-export default Home;
+
+export default Home
