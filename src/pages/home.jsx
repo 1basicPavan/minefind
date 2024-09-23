@@ -35,7 +35,7 @@ function Home() {
 
     if (loading){
         return (
-            <div>Carregando....</div>
+            <div>Carregando...</div>
             
         )
     }
