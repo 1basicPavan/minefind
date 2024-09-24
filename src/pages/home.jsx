@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Foudase } from "../style/input";
 import { Render } from "../style/render";
 
-import { SKinPreview } from "../components/skin-preview.component";
 import axios from "axios";
+import { SKinPreview } from "../components/skin-preview.component";
+import { FaHammer } from "react-icons/fa6";
 
 function Home() {
     const [data, setData] = useState();
@@ -50,7 +51,7 @@ function Home() {
 
                 <input placeholder="Nickname.." onChange={(e) => setValue(e.target.value)} />
                 <button onClick={() => fetchData()}>
-                    SEARCH
+                   <FaHammer className="hammer-image"/>
                 </button>
             </Foudase>
 
