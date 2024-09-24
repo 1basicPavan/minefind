@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Foudase } from "../style/input";
-
+import { ScaleLoader } from "react-spinners";
 import axios from "axios";
 import { SKinPreview } from "../components/skin-preview.component";
 import { FaHammer } from "react-icons/fa6";
@@ -36,7 +36,13 @@ function Home() {
 
     if (loading) {
         return (
-            <div>Carregando...</div>
+            <div className="div-load">
+
+                <ScaleLoader
+                color="rgba(255, 255, 255, 1)"
+                />
+
+            </div>
 
         )
     }
