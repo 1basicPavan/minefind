@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Foudase } from "../style/input";
+import { ScaleLoader } from "react-spinners";
 import { Render } from "../style/render";
 
 import axios from "axios";
@@ -38,7 +39,13 @@ function Home() {
 
     if (loading) {
         return (
-            <div>Carregando...</div>
+            <div className="div-load">
+
+                <ScaleLoader
+                color="rgba(255, 255, 255, 1)"
+                />
+
+            </div>
 
         )
     }
