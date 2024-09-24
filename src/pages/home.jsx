@@ -3,6 +3,7 @@ import { Foudase } from "../style/input";
 
 import { SKinPreview } from "../components/skin-preview.component";
 import axios from "axios";
+import Inter from "../style/fonts";
 
 function Home() {
     const [data, setData] = useState();
@@ -57,6 +58,5 @@ function Home() {
         </div>
     )
 }
-
 
 export default Home
