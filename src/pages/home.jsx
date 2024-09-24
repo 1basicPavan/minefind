@@ -71,7 +71,10 @@ function Home() {
                     <p>id: {data?.profileId}</p>
                 </div>
             </Render>
-
+            <div className="footer">
+                <h2>Contato: MineFind@gmail.com</h2>
+                <h2>Copyright 2024–2034</h2>
+            </div>
         </div>
     )
 }
