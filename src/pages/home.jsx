@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Foudase } from "../style/input";
 import { ScaleLoader } from "react-spinners";
+import { Render } from "../style/render";
+
 import axios from "axios";
 import { SKinPreview } from "../components/skin-preview.component";
 import { FaHammer } from "react-icons/fa6";
@@ -22,6 +24,7 @@ function Home() {
                             .then((resChild) => {
                                 setData(JSON.parse(atob(resChild.data.properties[0].value)));
                             })
+                        console.log(data)
                     })
             } catch (error) {
                 console.log(`Error no home.jsx/fetchData`, error);
@@ -58,11 +61,19 @@ function Home() {
                    <FaHammer className="hammer-image"/>
                 </button>
             </Foudase>
-            <p>{data?.profileName || ""}</p>
-            <SKinPreview skinUrl={data?.textures.SKIN.url} />
+
+            <Render>
+                
+                    <SKinPreview skinUrl={data?.textures.SKIN.url} />
+               
+                <div className="usuario">
+                    <p>Name: {data?.profileName || ""}</p>
+                    <p>id: {data?.profileId}</p>
+                </div>
+            </Render>
+
         </div>
     )
 }
-
 
 export default Home
