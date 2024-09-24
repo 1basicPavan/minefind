@@ -1,24 +1,27 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
+body{
+    background-color: #000B1C; 
+}
+
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    background-color: #000B1C;  
     font-family: "Inter", sans-serif;
     font-optical-sizing: auto;
     font-weight: weight;
     font-style: normal;  
-
+    color: white;
 }
 
 .Main {
-    width: 100%;
-    height: 560px;
+    width: 100vw;
+    height: 100vh;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
     flex-direction: column;
     gap: 0;
 }
@@ -26,9 +29,20 @@
 .Title {
     font-size: 100px;
     color: white;
-    margin-top: 25%;
+    margin-top: 150px;
     font-weight: 800;
-    padding-top: 10vh;
+}
+
+.footer{    
+    border-top-style: solid;
+    border-color: #75B798;
+    background: none;
+    width: 100%;
+    border-width: 5px;
+    height: 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
     
 }
 
