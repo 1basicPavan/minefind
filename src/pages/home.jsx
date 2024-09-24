@@ -46,14 +46,16 @@ function Home() {
 
     return (
         <div class="Main">
-            <div class="Title">MineFind</div>
-            <Foudase>
+            <div className="titleMain">
+                <div class="Title">MineFind</div>
+                <Foudase>
 
-                <input placeholder="Nickname.." onChange={(e) => setValue(e.target.value)} />
-                <button onClick={() => fetchData()}>
-                   <FaHammer className="hammer-image"/>
-                </button>
-            </Foudase>
+                    <input placeholder="Nickname.." onChange={(e) => setValue(e.target.value)} />
+                    <button onClick={() => fetchData()}>
+                    <FaHammer className="hammer-image"/>
+                    </button>
+                </Foudase>
+            </div>
 
             <Render>
                 
@@ -65,8 +67,8 @@ function Home() {
                 </div>
             </Render>
             <div className="footer">
-                <h2>Contato: MineFind@gmail.com</h2>
-                <h2>Copyright 2024–2034</h2>
+                <h3>Contato: MineFind@gmail.com</h3>
+                <h3>Copyright 2024–2034</h3>
             </div>
         </div>
     )
