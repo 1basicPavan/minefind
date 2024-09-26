@@ -3,10 +3,10 @@ import { styled} from "styled-components";
 export const Render = styled.div`
     display: flex;
     justify-content: space-between;
-    width: 500PX;
+    width: 534PX;
 
     .card-skinPreview{
-        width: 220px;
+        width: 222px;
         border-radius: 10px;
         background-color: #0F5132;
     }
@@ -22,6 +22,5 @@ export const Render = styled.div`
         flex-direction: column;
         justify-content: space-between;
         height: 100%;
-        
     }
 `

@@ -7,12 +7,16 @@ import axios from "axios";
 import { SKinPreview } from "../components/skin-preview.component";
 import { FaHammer } from "react-icons/fa6";
 
+
+
 function Home() {
     const [data, setData] = useState();
     const [value, setValue] = useState();
     const [loading, setLoading] = useState(false);
+    const [showSkin, setShowSkin] = React.useState(false);
 
-
+    
+    
     const fetchData = async () => {
         if (value) {
             try {
@@ -26,48 +30,54 @@ function Home() {
                             })
                         console.log(data)
                     })
+                    
             } catch (error) {
                 console.log(`Error no home.jsx/fetchData`, error);
             } finally {
                 setLoading(false);
             }
-        } else {
-            window.alert("n pode ta vazio")
         }
     };
 
+    const handleClick = () => {
+        if (value?.trim()){
+            fetchData();
+            setShowSkin(true) 
+        } else {
+            window.alert("Por favor, insira um nickname.");
+        }
+       }
 
+        const handleKeyDown = (e) => {
+            if (e.key === "Enter"){
+                setValue(e.target.value)
+                handleClick()
+            }
+        }
+    
     if (loading) {
         return (
             <div className="div-load">
-
                 <ScaleLoader
                 color="rgba(255, 255, 255, 1)"
                 />
-
             </div>
-
         )
     }
-
 
     return (
         <div class="Main">
             <div className="titleMain">
                 <div class="Title">MineFind</div>
                 <Foudase>
-
-                    <input placeholder="Nickname.." onChange={(e) => setValue(e.target.value)} />
-                    <button onClick={() => fetchData()}>
+                    <input placeholder="Nickname.." value={value} onChange={(e) => setValue(e.target.value)} onKeyDown={handleKeyDown}  />
+                    <button onClick={handleClick}>
                     <FaHammer className="hammer-image"/>
                     </button>
                 </Foudase>
             </div>
-
-            <Render>
-                
-                    <SKinPreview skinUrl={data?.textures.SKIN.url} />
-               
+            <Render style={{ visibility: showSkin ? "visible" : "hidden", opacity: showSkin ? 1 : 0, transition: "opacity 0.3s" }}>
+                <SKinPreview skinUrl={data?.textures.SKIN.url} />
                 <div className="usuario">
                     <p>Name: {data?.profileName || ""}</p>
                     <p>id: {data?.profileId}</p>
