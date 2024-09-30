@@ -3,7 +3,7 @@ import { styled} from "styled-components";
 export const Render = styled.div`
     display: flex;
     justify-content: space-between;
-    width: 534PX;
+    width: 544PX;
 
     .card-skinPreview{
         width: 222px;
