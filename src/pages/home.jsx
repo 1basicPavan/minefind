@@ -1,15 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Foudase } from "../style/input";
+import { ScaleLoader } from "react-spinners";
+import { Render } from "../style/render";
 
-import { SKinPreview } from "../components/skin-preview.component";
 import axios from "axios";
+import { SKinPreview } from "../components/skin-preview.component";
+import { FaHammer } from "react-icons/fa6";
+
+
 
 function Home() {
     const [data, setData] = useState();
     const [value, setValue] = useState();
     const [loading, setLoading] = useState(false);
+    const [showSkin, setShowSkin] = React.useState(false);
 
-
+    
+    
     const fetchData = async () => {
         if (value) {
             try {
@@ -21,42 +28,67 @@ function Home() {
                             .then((resChild) => {
                                 setData(JSON.parse(atob(resChild.data.properties[0].value)));
                             })
+                        console.log(data)
                     })
+                    
             } catch (error) {
                 console.log(`Error no home.jsx/fetchData`, error);
             } finally {
                 setLoading(false);
             }
-        } else {
-            window.alert("n pode ta vazio")
         }
     };
 
+    const handleClick = () => {
+        if (value?.trim()){
+            fetchData();
+            setShowSkin(true) 
+        } else {
+            window.alert("Por favor, insira um nickname.");
+        }
+       }
 
+        const handleKeyDown = (e) => {
+            if (e.key === "Enter"){
+                setValue(e.target.value)
+                handleClick()
+            }
+        }
+    
     if (loading) {
         return (
-            <div>Carregando...</div>
-
+            <div className="div-load">
+                <ScaleLoader
+                color="rgba(255, 255, 255, 1)"
+                />
+            </div>
         )
     }
 
-
     return (
         <div class="Main">
-            <div class="Title">MineFind</div>
-            <Foudase>
-
-                <input placeholder="Nickname.." onChange={(e) => setValue(e.target.value)} />
-                <button onClick={() => fetchData()}>
-                    .
-                    <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><path d="M280.16 242.79l-26.11-26.12a32 32 0 00-45.14-.12L27.38 384.08c-6.61 6.23-10.95 14.17-11.35 23.06a32.11 32.11 0 009.21 23.94l39 39.43a.46.46 0 00.07.07A32.29 32.29 0 0087 480h1.18c8.89-.33 16.85-4.5 23.17-11.17l168.7-180.7a32 32 0 00.11-45.34zM490 190l-.31-.31-34.27-33.92a21.46 21.46 0 00-15.28-6.26 21.89 21.89 0 00-12.79 4.14c0-.43.06-.85.09-1.22.45-6.5 1.15-16.32-5.2-25.22a258 258 0 00-24.8-28.74.6.6 0 00-.08-.08c-13.32-13.12-42.31-37.83-86.72-55.94A139.55 139.55 0 00257.56 32C226 32 202 46.24 192.81 54.68a119.92 119.92 0 00-14.18 16.22 16 16 0 0018.65 24.34 74.45 74.45 0 018.58-2.63 63.46 63.46 0 0118.45-1.15c13.19 1.09 28.79 7.64 35.69 13.09 11.7 9.41 17.33 22.09 18.26 41.09.18 3.82-7.72 18.14-20 34.48a16 16 0 001.45 21l34.41 34.41a16 16 0 0022 .62c9.73-8.69 24.55-21.79 29.73-25 7.69-4.73 13.19-5.64 14.7-5.8a19.18 19.18 0 0111.29 2.38 1.24 1.24 0 01-.31.95l-1.82 1.73-.3.28a21.52 21.52 0 00.05 30.54l34.26 33.91a21.45 21.45 0 0015.28 6.25 21.7 21.7 0 0015.22-6.2l55.5-54.82c.19-.19.38-.39.56-.59A21.87 21.87 0 00490 190z"/></svg>
-                </button>
-            </Foudase>
-            <p>{data?.profileName || ""}</p>
-            <SKinPreview skinUrl={data?.textures.SKIN.url} />
+            <div className="titleMain">
+                <div class="Title">MineFind</div>
+                <Foudase>
+                    <input placeholder="Nickname.." value={value} onChange={(e) => setValue(e.target.value)} onKeyDown={handleKeyDown}  />
+                    <button onClick={handleClick}>
+                    <FaHammer className="hammer-image"/>
+                    </button>
+                </Foudase>
+            </div>
+            <Render style={{ visibility: showSkin ? "visible" : "hidden", opacity: showSkin ? 1 : 0, transition: "opacity 0.3s" }}>
+                <SKinPreview skinUrl={data?.textures.SKIN.url} />
+                <div className="usuario">
+                    <p>Name: {data?.profileName || ""}</p>
+                    <p>id: {data?.profileId}</p>
+                </div>
+            </Render>
+            <div className="footer">
+                <h3>Contato: MineFind@gmail.com</h3>
+                <h3>Copyright 2024–2034</h3>
+            </div>
         </div>
     )
 }
-
 
 export default Home
